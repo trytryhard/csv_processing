@@ -3,3 +3,6 @@
 .*csv
 .idea/
 .venv/
+*/__*
+./*.csv
+./src/__pycache__
