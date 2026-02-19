@@ -1,88 +1,79 @@
 import argparse
 import pathlib
 import os
-from encodings import aliases as enc
-from file_validation import cols_validation, content_validation
 import to_log
+
+from encodings import aliases as enc
+from file_validation import cols_validation
 from csv_processing import CSV_Processing
-
-"""
-todo:
-1) check and rewrite help notation 
-need:
-1) function : average
-2) res sorted desc
-
-extra:
-    extra funcs: sum, mode, median
-3) groupby flag
-4) orderby flag (asc, desc
-6) validation
-"""
 
 csv_prc_instance = CSV_Processing()
 
-def report_menu(func):
+def report_menu(func:str)->list:
     """
-    :param func: report-type
+    :param func: report-type string
     :return: result of CSV_Processing's method
     """
     reports_dict = {
     "avg" : lambda: csv_prc_instance.avg_func(),
     "average" : lambda: csv_prc_instance.avg_func(),
+
     "sum" : lambda: csv_prc_instance.sum_func(),
     "summation" : lambda: csv_prc_instance.sum_func(),
+
     "cnt" : lambda: csv_prc_instance.cnt_func(),
     "count" : lambda: csv_prc_instance.cnt_func(),
+
     "mode" : lambda: csv_prc_instance.mode_func()
     }
 
     if func not in reports_dict:
-        to_log.message(f"There was wrong report-value - {func}"
-                       f"\nYou should use name from these keywords:"
-                       f"\n{', '.join(list(reports_dict.keys()))}")
+        to_log.message(f"===Wrong report-value - {func}===\n")
+        to_log.message(f"You should use name from these keywords:\n")
+        to_log.message(f"{', '.join(list(reports_dict.keys()))}\n")
         raise NameError("Please check report-flag")
 
     return reports_dict[func]()
 
 
-def main(**kwargs:list|str|bool)->bool:
+def main(**kwargs:list|str|bool)->list:
     path_to_file:list = []
     val_flag: bool = False
-    report_name: str = ''
 
-    #prepare args
+    #prepare atributes
     for name, value in kwargs.items():
-        print(name, value)
         if name == "files":
             path_to_file = [x for x in value if os.path.exists(x)]
+
         elif name == "report":
-            report_name = value.split("-")[0]
-            csv_prc_instance.digital_col = value.split("-")[1]
+            csv_prc_instance.report = value.split("-")[0]
+            csv_prc_instance.digital_col = "-".join(value.split("-")[1::])
 
         elif name == "groupby":
             csv_prc_instance.groupby = value or ["country"]
 
         elif name == "validation":
-            val_flag = value
+            val_flag = False if value in ["0","False"] else True
 
         elif name == "separator":
             if not value:
-                to_log.message(f"There was empty separator, program gonna use comma (,) instead")
+                to_log.message(f"There was empty separator, program gonna use comma (,) instead\n")
             if len(value)>1:
-                to_log.message(f"There was a lon sep with length {len(value)}, "
-                               f"so program gonna use first symbol {value[0]} instead")
+                to_log.message(f"There was a long sep - '{value}', with length {len(value)}, "
+                               f"so program gonna use first symbol {value[0]} instead\n")
             csv_prc_instance.sep = value[0] if value else ","
 
         elif name == "encoding":
             if value not in [x for y in enc.aliases.items() for x in y]:
-                to_log.message(f"Encoding {value} is out of standard encodings: {list(enc.aliases.items())}")
+                to_log.message("===Wrong encoding===")
+                to_log.message(f"Encoding {value} is out of standard encodings: {list(enc.aliases.items())}\n")
                 raise NameError("Please check inputted encoding-value")
             else:
                 csv_prc_instance.encoding = value
 
         elif name == "descending":
-            csv_prc_instance.descending = value
+            csv_prc_instance.descending = False if value in ["0","False"] else True
+
 
     if val_flag:
         #validate files by needed cols names
@@ -90,17 +81,11 @@ def main(**kwargs:list|str|bool)->bool:
                                        needed_cols = [csv_prc_instance.digital_col] + csv_prc_instance.groupby,
                                        sep_val = csv_prc_instance.sep,
                                        enc_val = csv_prc_instance.encoding)
-        #TODO validate files by content for cols
-        path_to_file = content_validation(path_to_file,
-                                          digital_cols=csv_prc_instance.digital_col,
-                                          sep_val = csv_prc_instance.sep,
-                                          enc_val = csv_prc_instance.encoding)
-
     csv_prc_instance.files = path_to_file
 
-    report_menu(report_name)
 
-    return True
+
+    return report_menu(csv_prc_instance.report)
 
 
 if __name__ == "__main__":
@@ -108,8 +93,8 @@ if __name__ == "__main__":
         description = "Helper with csv-files.",
         epilog="Examples of usage via console: "
                "\n\tfrom src dir: python main.py --files file1.csv file2.csv --report average-gdp"
-               "\n\tfrom repository dir: python .\src\main.py --files .\data\economic1.csv .\data\economic2.csv "
-               "--report sum-population --groupby continent year"
+               "\n\tfrom repository dir: python .\\src\\main.py --files .\\data\\economic1.csv .\\data\\economic2.csv "
+               "--report mode-population --groupby year continent --descending 0  --encoding 1251"
                "\nIf you got some errors - report it into issue-seciton via link: "
                r"https://github.com/trytryhard/csv_processing/issues",
         formatter_class=argparse.RawTextHelpFormatter)
@@ -130,7 +115,7 @@ if __name__ == "__main__":
                              "\nList of report:"
                              "\n\t average - calculate average value;"
                              "\n\textra: sum - calculate sum of col.; median - calc median value; mode - calc mode value" 
-                             "\nIMPORTANT: Required argument. Obtain string-value."
+                             "\nIMPORTANT: Required argument. Obtain string-value. Strictly one col-name"
                              "\n\tIf there is no column with this name, these files "
                              "will be dropped from processing by True --validation flag"
                              "\n\n",
@@ -153,12 +138,12 @@ if __name__ == "__main__":
                              "\nValidation drop wrong file from processing."
                              "Wrong file is a file that haven't needed column[-s] or its column content is wrong."
                              "\nList of cols decides by groupby argument and --report col-part."
-                             "\nIMPORTANT: Optional argument. Obtain bool-value."
+                             "\nIMPORTANT: Optional argument. False-value in ['0','False'] all other are True."
                              "\n\tIt may slow a program, but it helps cope with non validated csv-files."
-                             "\n\tIf there is no column\data with this name, these files"
+                             "\n\tIf there is no column\\data with this name, these files"
                              "will be dropped from processing!"
                              "\n\n",
-                        type=bool,
+                        type=str,
                         default=True,
                         required=False)
 
@@ -176,10 +161,10 @@ if __name__ == "__main__":
 
     parser.add_argument("-desc", "--descending",
                         help="The Order of result."
-                             "\nImportant: Optional argument. Obtain bool-value."
+                             "\nImportant: Optional argument. False-value in ['0','False'] all other are True."
                              "\n\tBy default: the result orders descending (True).",
-                        type=bool,
-                        default=True,
+                        type=str,
+                        default='1',
                         required=False)
 
     args = parser.parse_args()
