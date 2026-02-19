@@ -1,6 +1,7 @@
 """Test for main.py from ../src/"""
 
 import sys
+
 import pytest  # pylint disable=C0413
 
 sys.path.append(r"../src/")
