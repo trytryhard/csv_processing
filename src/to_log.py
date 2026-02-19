@@ -2,10 +2,11 @@
 isolated log-func for usage in edge cases
 """
 
-import time
 import os
+import time
 
-def message(message:str, log_name:str ='default.log', log_dir:str = './logs/', is_silent:bool = False) -> bool:
+
+def log_message(message: str, log_name: str = "default.log", log_dir: str = "./logs/", is_silent: bool = False) -> bool:
     """
     function for loggin msg into specialised log
     :param message: - body of mesasge
@@ -15,17 +16,18 @@ def message(message:str, log_name:str ='default.log', log_dir:str = './logs/', i
     """
     timestamp = time.strftime("%Y-%m-%d %H:%M:%S")
 
-    logLine = f"[{timestamp}] {message}"
+    log_line = f"[{timestamp}] {message}"
 
     if not os.access(log_dir, os.F_OK):
         os.mkdir(log_dir, mode=0o777)
 
     try:
-        with open(log_dir+log_name, "a") as f:
-            f.write(logLine)
+        with open(log_dir + log_name, "a", encoding="utf8") as f:
+            f.write(log_line)
         if not is_silent:
             print(message)
         return True
-    except:
-        print("logger crashed")
+
+    except Exception as e:  # pylint: disable=broad-exception-caught
+        print("logger crashed", str(e), sep=" ")
         return False

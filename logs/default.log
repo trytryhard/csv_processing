@@ -104,3 +104,35 @@
 [2026-02-19 22:41:37] These files was dropped from processing (wrong sep or col-name): ['test\\test_data\\fine_file2.csv']
 [2026-02-19 22:41:37] ===All files dropped after validation===
 [2026-02-19 22:41:37] There is no files left in queue after validation for processing
+[2026-02-19 23:47:04] ===Columns validation===
+[2026-02-19 23:47:04] These files was dropped from processing (wrong sep or col-name): ['test\\test_data\\corrupted_sep.csv']
+[2026-02-19 23:47:04] ===Corrupted numeric value===
+[2026-02-19 23:47:04] At file test\test_data\corrupted_content.csv was found corrupted numeric: 'corrupted' in 'population' column.
+[2026-02-19 23:47:04] could not convert string to float: 'corrupted'
+[2026-02-19 23:47:13] ===Columns validation===
+[2026-02-19 23:47:13] These files was dropped from processing (wrong sep or col-name): ['test\\test_data\\corrupted_sep.csv']
+[2026-02-19 23:47:13] ===Corrupted numeric value===
+[2026-02-19 23:47:13] At file test\test_data\corrupted_content.csv was found corrupted numeric: 'corrupted' in 'population' column.
+[2026-02-19 23:47:13] could not convert string to float: 'corrupted'
+[2026-02-19 23:47:27] ===Columns validation===
+[2026-02-19 23:47:27] These files was dropped from processing (wrong sep or col-name): ['test\\test_data\\corrupted_sep.csv']
+[2026-02-19 23:47:27] ===Corrupted numeric value===
+[2026-02-19 23:47:27] At file test\test_data\corrupted_content.csv was found corrupted numeric: 'corrupted' in 'population' column.
+[2026-02-19 23:47:27] could not convert string to float: 'corrupted'
+[2026-02-19 23:47:31] ===Columns validation===
+[2026-02-19 23:47:31] These files was dropped from processing (wrong sep or col-name): ['test\\test_data\\corrupted_sep.csv']
+[2026-02-19 23:47:31] ===Corrupted numeric value===
+[2026-02-19 23:47:31] At file test\test_data\corrupted_content.csv was found corrupted numeric: 'corrupted' in 'population' column.
+[2026-02-19 23:47:31] could not convert string to float: 'corrupted'
+[2026-02-19 23:47:38] ===Columns validation===
+[2026-02-19 23:47:38] These files was dropped from processing (wrong sep or col-name): ['test\\test_data\\corrupted_sep.csv']
+[2026-02-19 23:47:38] ===Corrupted numeric value===
+[2026-02-19 23:47:38] At file test\test_data\corrupted_content.csv was found corrupted numeric: 'corrupted' in 'population' column.
+[2026-02-19 23:47:38] could not convert string to float: 'corrupted'
+[2026-02-19 23:48:01] ===Columns validation===
+[2026-02-19 23:48:01] These files was dropped from processing (wrong sep or col-name): ['test\\test_data\\corrupted_sep.csv']
+[2026-02-19 23:48:22] ===Columns validation===
+[2026-02-19 23:48:22] These files was dropped from processing (wrong sep or col-name): ['test\\test_data\\corrupted_sep.csv']
+[2026-02-19 23:48:22] ===Corrupted numeric value===
+[2026-02-19 23:48:22] At file test\test_data\corrupted_content.csv was found corrupted numeric: 'corrupted' in 'population' column.
+[2026-02-19 23:48:22] could not convert string to float: 'corrupted'
