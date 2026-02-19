@@ -1,0 +1,9 @@
+.idea/
+.venv/
+*/__*
+./test/logs/
+./logs/*
+./data/*
+.*csv
+./*.csv
+./src/__pycache__
