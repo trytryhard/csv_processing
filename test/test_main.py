@@ -12,7 +12,13 @@ def test_avg():
     """test AVERAGE-report"""
     res_avg = [
         ["continent", "population(avg)"],
-        [["Asia", 495.3333], ["South America", 215.0], ["North America", 171.7273], ["Europe", 65.7586], ["Oceania", 26.0]],
+        [
+            ["Asia", 495.3333],
+            ["South America", 215.0],
+            ["North America", 171.7273],
+            ["Europe", 65.7586],
+            ["Oceania", 26.0],
+        ],
     ]
 
     res_func = main(
