@@ -18,7 +18,8 @@ def test_avg():
     res_func = main(
         files=[
             r".\test_data\corrupted_col.csv",
-            r".\test_data\corrupted_sep.csv" r".\test_data\fine_file.csv",
+            r".\test_data\corrupted_sep.csv",
+            r".\test_data\fine_file.csv",
             r".\test_data\fine_file2.csv",
         ],
         report="avg-population",
@@ -26,6 +27,7 @@ def test_avg():
         encoding="utf8",
         descending="1",
         separator=",",
+        validation="1"
     )
 
     assert res_avg == res_func
