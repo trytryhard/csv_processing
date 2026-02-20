@@ -30,4 +30,4 @@
 - `test/` - unit-тесты
 - `docs/` - документация us\ru
 
-### Все баги и предложения размещайте в [issues репозитория](https://github.com/trytryhard/csv_processing/issues)
+### Все баги и предложения размещать - [issues репозитория](https://github.com/trytryhard/csv_processing/issues)
