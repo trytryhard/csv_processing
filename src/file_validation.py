@@ -30,7 +30,7 @@ def cols_validation(path_to_csv: list, needed_cols: list, sep_val: str, enc_val:
         to_log.log_message(
             f"These files was dropped from processing (wrong sep or col-name): "
             f"{[str(x) for x in validated if validated[x] == False]}\n"
-        )  # pylint: disable = C0121
+        )
 
     if len([csv_path for csv_path in validated if validated[csv_path]]) == 0:
         to_log.log_message("===All files dropped after validation===\n")

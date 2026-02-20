@@ -1,9 +1,8 @@
 .idea/
 .venv/
 */__*
-./test/logs/
-./logs/*
-./data/*
-.*csv
-./*.csv
-./src/__pycache__
+/test/logs/
+/logs/*
+/data/*
+/src/__pycache__
+*.log

@@ -2,4 +2,7 @@
 line-length = 120
 
 [tool.pylint]
-line-length = 120
+max-line-length = 120
+
+[tool.pylint."MESSAGES CONTROL"]
+disable = ["W0707", "C0200", "C0121", "F0010", "W0718"]

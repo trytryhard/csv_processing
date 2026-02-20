@@ -28,6 +28,6 @@ def log_message(message: str, log_name: str = "default.log", log_dir: str = "./l
             print(message)
         return True
 
-    except Exception as e:  # pylint: disable=broad-exception-caught
+    except Exception as e:
         print("logger crashed", str(e), sep=" ")
         return False

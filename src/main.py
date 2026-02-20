@@ -17,15 +17,14 @@ def report_menu(func: str) -> list:
     :param func: report-type string
     :return: result of CSV_Processing's method
     """
-    # pylint: disable=W0108
     reports_dict = {
-        "avg": lambda: csv_prc_instance.avg_func(),
-        "average": lambda: csv_prc_instance.avg_func(),
-        "sum": lambda: csv_prc_instance.sum_func(),
-        "summation": lambda: csv_prc_instance.sum_func(),
-        "cnt": lambda: csv_prc_instance.cnt_func(),
-        "count": lambda: csv_prc_instance.cnt_func(),
-        "mode": lambda: csv_prc_instance.mode_func(),
+        "avg": csv_prc_instance.avg_func,
+        "average": csv_prc_instance.avg_func,
+        "sum": csv_prc_instance.sum_func,
+        "summation": csv_prc_instance.sum_func,
+        "cnt": csv_prc_instance.cnt_func,
+        "count": csv_prc_instance.cnt_func,
+        "mode": csv_prc_instance.mode_func,
     }
 
     if func not in reports_dict:
@@ -55,11 +54,11 @@ def main(**kwargs: list | str | bool) -> list:
             csv_prc_instance.groupby = value or ["country"]
 
         elif name == "validation":
-            val_flag = False if value in ["0", "False"] else True  # pylint: disable=R1719
+            val_flag = value not in ["0", "False"]
 
         elif name == "separator":
             if not value:
-                to_log.log_message("There was empty separator, " "program gonna use comma (,) instead\n")
+                to_log.log_message("Found empty separator, program gonna use comma as sep\n")
             if len(value) > 1:
                 to_log.log_message(
                     f"There was a long sep - '{value}', with length {len(value)}, "
@@ -70,12 +69,12 @@ def main(**kwargs: list | str | bool) -> list:
         elif name == "encoding":
             if value not in [x for y in enc.aliases.items() for x in y]:
                 to_log.log_message("===Wrong encoding===")
-                to_log.log_message(f"Encoding {value} is out of standard encodings: " f"{list(enc.aliases.items())}\n")
+                to_log.log_message(f"Encoding {value} not found in :{list(enc.aliases.items())}\n")
                 raise NameError("Please check inputted encoding-value")
             csv_prc_instance.encoding = value
 
         elif name == "descending":
-            csv_prc_instance.descending = False if value in ["0", "False"] else True  # pylint: disable=R1719
+            csv_prc_instance.descending = value not in ["0", "False"]
 
     if val_flag:
         # validate files by needed cols names
@@ -174,7 +173,7 @@ if __name__ == "__main__":
     parser.add_argument(
         "-s",
         "--separator",
-        help="Common separator for csv file[-s]. By default is a comma (,). " "Obtain string-value.",
+        help="Common separator for csv file[-s]. By default is a comma ,. Obtain string-value.",
         type=str,
         default=",",
         required=False,

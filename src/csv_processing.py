@@ -28,7 +28,7 @@ class CSVProcessing:
         block of code that use tabulate for printing resulted table
         """
         self.sensitive_data = sorted(self.sensitive_data, reverse=self.descending, key=lambda x: x[1])
-        for i in range(len(self.sensitive_data)):  # pylint: disable=C0200
+        for i in range(len(self.sensitive_data)):
             self.sensitive_data[i] = self.sensitive_data[i][0] + self.sensitive_data[i][1]
 
         header = self.groupby + [self.digital_col + "(" + self.report + ")"]
@@ -89,7 +89,7 @@ class CSVProcessing:
 
                     try:
                         cur_pos["sum"] += float(row[self.digital_col])
-                    except Exception as e:  # pylint: disable=W0707
+                    except Exception as e:
                         to_log.log_message("===Corrupted numeric value===\n")
                         to_log.log_message(
                             f"At file {file} was found corrupted numeric: "
@@ -97,7 +97,7 @@ class CSVProcessing:
                             f"in '{self.digital_col}' column.\n"
                         )
                         to_log.log_message(str(e) + "\n")
-                        raise NameError("Corrupted numeric value")  # pylint: disable=W0707
+                        raise NameError("Corrupted numeric value")
 
                     cur_pos["count"] += 1
 
@@ -135,7 +135,7 @@ class CSVProcessing:
                         cur_pos["sum"] = 0
                     try:
                         cur_pos["sum"] += float(row[self.digital_col])
-                    except Exception as e:  # pylint: disable=W0707
+                    except Exception as e:
                         to_log.log_message("===Corrupted numeric value===\n")
                         to_log.log_message(
                             f"At file {file} was found corrupted numeric: "
@@ -143,7 +143,7 @@ class CSVProcessing:
                             f"in '{self.digital_col}' column.\n"
                         )
                         to_log.log_message(str(e) + "\n")
-                        raise NameError("Corrupted numeric value")  # pylint: disable=W0707
+                        raise NameError("Corrupted numeric value")
 
         self.sensitive_data = self.flat_dict()
 
