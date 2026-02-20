@@ -27,7 +27,7 @@ def test_avg():
         encoding="utf8",
         descending="1",
         separator=",",
-        validation="1"
+        validation="1",
     )
 
     assert res_avg == res_func
